@@ -5,7 +5,7 @@ Instana is the first and only fully automated Application Performance Management
 This repository provides Ansible-way to deploy Instana on an existing single virtual machine (with 16 cores and 64 gb RAM). This is a [self-hosted container-based installation of Instana](https://www.ibm.com/docs/en/obi/current?topic=installer-container-based-installation).
 
 ### 1. Pre-requisites
-Please ensure that the following pre-requisites are met before executing the ansible scripts to deploy CP4WAIOps.
+Please ensure that the following pre-requisites are met before executing the ansible scripts to deploy Instana.
 
 1. You need an ansible-controller machine from which the scripts are executed. This could be your laptop or a dedicated linux machine. This can only be a Mac or Linux machine and NOT Windows.
 2. Install Python 3.10+ on the ansible-controller. Check the version with 'python --version'.
