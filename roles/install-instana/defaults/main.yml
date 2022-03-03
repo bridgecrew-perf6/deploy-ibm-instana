@@ -1,0 +1,5 @@
+---
+# defaults file for install-instana
+INSTANA_HOST: put-your-value-here # like 9.30.248.37.nip.io or FQDN
+SALES_ID: put-your-value-here
+AGENT_KEY: put-your-value-here

@@ -1,0 +1,121 @@
+type                    = "single"
+profile                 = "normal"
+tenant                  = "myinstana"
+unit                    = "ibm"
+agent_key               = "{{ AGENT_KEY }}"
+download_key            = "{{ AGENT_KEY }}"
+sales_key               = "{{ SALES_ID }}"
+host_name               = "{{ INSTANA_HOST }}"
+token_secret            = "kDenYDrxYRyC"
+clickhouse_bind_address = ""
+
+cert {
+  crt = "/root/cert/tls.crt"
+  key = "/root/cert/tls.key"
+}
+
+dir {
+  metrics = "/mnt/metrics"
+  traces  = "/mnt/traces"
+  data    = "/mnt/data"
+  logs    = "/var/log/instana"
+}
+
+proxy {
+  host     = ""
+  port     = 0
+  user     = ""
+  password = ""
+}
+
+artifact_repository {
+  repository_url = "https://artifact-public.instana.io/artifactory/shared/"
+  user           = "_"
+  password       = "{{ AGENT_KEY }}"
+}
+
+email {
+
+  smtp {
+    from      = ""
+    host      = ""
+    port      = 0
+    user      = ""
+    password  = ""
+    use_ssl   = false
+    start_tls = false
+  }
+
+  ses {
+    from            = ""
+    aws_access_key  = ""
+    aws_access_id   = ""
+    aws_return_path = ""
+    aws_region      = ""
+  }
+}
+
+docker_repository {
+  base_url = "containers.instana.io"
+  username = "_"
+  password = "{{ AGENT_KEY }}"
+}
+
+geo_db {
+  download_url = "https://packages.instana.io/geodb/geolite2-city.tar.gz"
+  file_name    = "GeoLite2-City.mmdb"
+  user         = ""
+  password     = "{{ AGENT_KEY }}"
+}
+
+feature "useInstanaSaasEumTrackingUrlEnabled" {
+  enabled = true
+}
+feature "skipOnboardingDialog" {
+  enabled = true
+}
+feature "agentMonitoringIssuesEnabled" {
+  enabled = true
+}
+feature "rulesMemoryleakEnabled" {
+  enabled = true
+}
+feature "fullTermsConfigEnabled" {
+  enabled = true
+}
+feature "pcfEnabled" {
+  enabled = true
+}
+feature "showUserSettingInternalTagsInUA" {
+  enabled = true
+}
+feature "authenticationOidcEnabled" {
+  enabled = true
+}
+feature "loggingEnabled" {
+  enabled = false
+}
+feature "loggingEnabledOnTrace" {
+  enabled = false
+}
+feature "highResolutionInfrastructureMetricsEnabled" {
+  enabled = true
+}
+feature "beeinstanaInfraMetricsEnabled" {
+  enabled = false
+}
+feature "infraMetricsWidgetEnabled" {
+  enabled = false
+}
+feature "infraExplorePresentationEnabled" {
+  enabled = false
+}
+feature "infraExploreDataEnabled" {
+  enabled = false
+}
+feature "infrastructureExploreDataEnabled" {
+  enabled = false
+}
+feature "smartAlertsLogsBlueprintEnabled" {
+  enabled = false
+}

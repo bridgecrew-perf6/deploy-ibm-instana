@@ -1,0 +1,84 @@
+---
+# tasks file for install-instana
+- name: Get docker GPG key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+
+- name: Add Docker Repository
+  apt_repository:
+    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable
+    state: present
+    filename: docker
+    mode: 0600
+
+- name: Update the packages cache
+  apt: 
+    update_cache: yes
+
+- name: Install Docker
+  apt: 
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+    state: present
+
+- name: Start Docker Service
+  service: 
+    name: docker
+    state: started
+    enabled: yes
+
+- name: Add Instana GPG key
+  apt_key:
+    url: https://self-hosted.instana.io/signing_key.gpg
+    state: present
+
+- name: Add Instana Repository
+  apt_repository:
+    repo: deb [arch=amd64] https://self-hosted.instana.io/apt generic main
+    state: present
+    filename: instana-product
+    validate_certs: no 
+  ignore_errors: yes
+
+- name: Update the packages cache
+  apt:
+    update_cache: yes
+
+- name: Install Instana package
+  apt: 
+    name:
+      - instana-console
+    state: present
+
+- name: Copy settings.hcl file into /root folder on target VM
+  template:
+    src: settings.j2
+    dest: /root/settings.hcl
+    owner: root
+    group: root
+    mode: 0444
+
+- name: Create directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+  with_items:
+    - /var/log/instana
+    - /mnt/data
+    - /mnt/traces
+    - /root/cert
+    - /mnt/metrics
+  ignore_errors: yes
+
+- name: Generate TLS certificate
+  command: openssl req -x509 -newkey rsa:2048 -keyout /root/cert/tls.key -out /root/cert/tls.crt -days 365 -nodes -subj "/CN={{ inventory_hostname_short }}"
+
+- name: Install Instana... be patient... this will take about 30 to 45 mins
+  command: instana init -f settings.hcl -y --force
+  register: install_output
+
+- debug:
+    var: install_output.stdout_lines
