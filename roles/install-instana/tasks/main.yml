@@ -82,3 +82,15 @@
 
 - debug:
     var: install_output.stdout_lines
+
+- name: Download Instana license
+  command: instana license download
+  register: license_output
+- debug:
+    var: license_output.stdout_lines
+
+- name: Apply license
+  command: instana license import
+  register: license_import
+- debug:
+    var: license_import.stdout_lines
